@@ -1,17 +1,25 @@
-const handleClick = () => {
-  const data = { p1: "fgdfg", p2: "gfdgdhgd", p3: "dfgdfgdgs" };
+const handleClick = (e) => {
+  e.preventDefault();
+  const formData = new FormData();
+  formData.append("entry.1108936293", document.querySelector("#id1").value);
+  formData.append("entry.1055028752", document.querySelector("#id2").value);
+  formData.append("entry.122502251", document.querySelector("#id3").value);
+  console.log(document.querySelector("#id1").value);
   fetch(
-    `https://script.google.com/macros/s/AKfycbybafjp4FqvByk4uKikz8OlZzsIEWkIRHpk8v7JmUXrv0ESU-uBz7yCm2v08ifloBko/exec`,
+    `https://docs.google.com/forms/d/e/1FAIpQLSfX44GKzXNEZLQwePNWDiHOH1u63aqgVchfYwO3RCRK0bioEA/formResponse`,
     {
-      redirect: "follow",
+      // redirect: "follow",
       method: "POST",
-      data: JSON.stringify(data),
-      headers: {
-        "Content-Type": "text/plain;charset=utf-8",
+      mode: "no-cors",
+      body: formData,
+      header: {
+        "Content-Type": "application/json",
       },
     }
-  ).then((resp) => console.log(resp));
+  )
+    .then((resp) => console.log(resp))
+    .catch((err) => console.error(err));
 };
 
-const butt = document.querySelector("button");
-butt.addEventListener("click", handleClick);
+const butt = document.querySelector("form");
+butt.addEventListener("submit", handleClick);
